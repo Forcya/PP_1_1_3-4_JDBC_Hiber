@@ -1,5 +1,9 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
+import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
@@ -8,6 +12,7 @@ import jm.task.core.jdbc.util.Util;
 public class Main {
 
     public static void main(String[] args) {
+        UserDao userDao = new UserDaoHibernateImpl();
         UserService userService = new UserServiceImpl();
 
         userService.createUsersTable();
@@ -17,11 +22,13 @@ public class Main {
         userService.saveUser("Name3", "LastName3", (byte) 31);
         userService.saveUser("Name4", "LastName4", (byte) 38);
 
-        userService.removeUserById(2);
-        userService.getAllUsers();
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
+        userDao.removeUserById(4);
+        userDao.getAllUsers();
+        userDao.cleanUsersTable();
+        userDao.dropUsersTable();
 
-        Util.isClosed();
+        Util.isClosedSession();
+
+
     }
 }
